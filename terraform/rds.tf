@@ -8,10 +8,10 @@ provider "aws" {
 
 # create default vpc if one does not exit
 resource "aws_default_vpc" "default_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "10.123.0.0/16"
 }
   tags = {
-    Name = "default vpc"
+    Name = "default-vpc"
   }
 
 
@@ -22,12 +22,17 @@ data "aws_availability_zones" "available_zones" {}
 # create a default subnet in the first az if one does not exit
 resource "aws_default_subnet" "subnet_az1" {
   availability_zone = data.aws_availability_zones.available_zones.names[0]
+tags = {
+    Name = "Subnet-AZ1"
+  }
 }
 
 # create a default subnet in the second az if one does not exit
 resource "aws_default_subnet" "subnet_az2" {
   availability_zone = data.aws_availability_zones.available_zones.names[1]
-}
+tags = {
+    Name = "Subnet-AZ2"
+  }
 }
 
 # create security group for the web
